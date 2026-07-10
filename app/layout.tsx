@@ -7,25 +7,35 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 const syne = Syne({ subsets: ['latin'], variable: '--font-display', weight: ['700', '800'] })
 
+const siteUrl = 'https://agora-mentor-extension-website.vercel.app'
+
 export const metadata: Metadata = {
-  title: 'Agora Mentor — Voice AI for Developers',
-  description: 'Talk to your code. Get answers instantly. Select any code in VS Code, pick a focus — explain, debug, refactor — then speak.',
-  generator: 'v0.app',
+  title: 'Agora Mentor — Voice AI Code Review for VS Code',
+  description: 'Talk to your code. Select any snippet in VS Code, pick a focus — explain, debug, refactor — then speak. Agora Mentor connects you to an AI voice agent in seconds.',
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: 'Agora Mentor — Voice AI Code Review for VS Code',
+    description: 'Talk to your code. Select any snippet in VS Code, pick a focus — explain, debug, refactor — then speak. AI voice + text mentor in your editor.',
+    url: siteUrl,
+    siteName: 'Agora Mentor',
+    type: 'website',
+    images: [{ url: '/agora-logo-rgb-blue.svg', width: 1000, height: 343, alt: 'Agora Mentor' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Agora Mentor — Voice AI Code Review for VS Code',
+    description: 'Select code in VS Code, speak your question, get an AI voice answer. Built on Agora RTC.',
+    images: ['/agora-logo-rgb-blue.svg'],
+  },
   icons: {
-    icon: [
-      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
+    icon: [{ url: '/agora-logo-mark.svg', type: 'image/svg+xml' }],
     apple: '/apple-icon.png',
   },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#09071A' },
-  ],
+  themeColor: [{ media: '(prefers-color-scheme: dark)', color: '#050505' }],
   userScalable: true,
 }
 

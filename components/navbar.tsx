@@ -29,15 +29,14 @@ export function Navbar() {
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-vscode' },
-            { label: 'Marketplace', href: '#' },
-            { label: 'Changelog', href: '#' },
+            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website' },
+            { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-extension-website/releases' },
           ].map(link => (
             <a
               key={link.label}
               href={link.href}
-              target={link.href !== '#' ? '_blank' : undefined}
-              rel={link.href !== '#' ? 'noopener noreferrer' : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm transition-colors"
               style={{ color: '#888888' }}
               onMouseEnter={e => ((e.target as HTMLElement).style.color = '#FFFFFF')}
@@ -46,15 +45,26 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <button className="btn-primary px-5 py-2 text-sm">
-            Install Free
-          </button>
+          <div className="relative">
+            <button
+              disabled
+              className="btn-primary px-5 py-2 text-sm opacity-60 cursor-not-allowed"
+            >
+              Coming Soon
+            </button>
+            <span
+              className="absolute -top-2 -right-2 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+              style={{ background: '#fbbf24', color: '#000' }}
+            >
+              v0.1
+            </span>
+          </div>
         </div>
 
         {/* Mobile */}
         <div className="md:hidden">
-          <button className="btn-primary px-4 py-2 text-sm">
-            Install Free
+          <button disabled className="btn-primary px-4 py-2 text-sm opacity-60 cursor-not-allowed">
+            Coming Soon
           </button>
         </div>
       </div>
