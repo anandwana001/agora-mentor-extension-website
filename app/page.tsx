@@ -375,7 +375,7 @@ export default function Home() {
               Install Extension
               <ArrowRight className="w-4 h-4" />
             </button>
-            <a href="https://github.com/anandwana001/agora-mentor-extension-website" target="_blank" rel="noopener noreferrer" className="btn-ghost px-8 py-4 text-base">
+            <a href="https://github.com/anandwana001/agora-mentor-vscode" target="_blank" rel="noopener noreferrer" className="btn-ghost px-8 py-4 text-base">
               View on GitHub
             </a>
           </motion.div>
@@ -1014,10 +1014,10 @@ export default function Home() {
 
             <div className="flex justify-start md:justify-center gap-6 text-sm flex-wrap">
               {[
-                { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website' },
+                { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-vscode' },
                 { label: 'Marketplace', href: '#' },
                 { label: 'Changelog', href: '#' },
-                { label: 'Issues', href: 'https://github.com/anandwana001/agora-mentor-extension-website/issues' },
+                { label: 'Issues', href: 'https://github.com/anandwana001/agora-mentor-vscode/issues' },
               ].map(link => (
                 <a
                   key={link.label}

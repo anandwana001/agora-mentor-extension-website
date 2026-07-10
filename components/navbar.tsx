@@ -29,7 +29,7 @@ export function Navbar() {
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website' },
+            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-vscode' },
             { label: 'Marketplace', href: '#' },
             { label: 'Changelog', href: '#' },
           ].map(link => (
