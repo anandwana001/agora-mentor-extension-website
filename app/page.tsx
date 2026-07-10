@@ -1006,7 +1006,6 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8 items-center">
             <div className="flex items-center gap-3">
-              <Image src="/agora-logo-mark.svg" alt="Agora" width={28} height={28} />
               <div>
                 <Image src="/agora-logo-rgb-blue.svg" alt="agora" width={80} height={27} />
                 <div className="text-xs mt-0.5" style={{ color: '#555555' }}>Mentor · Voice AI for developers</div>

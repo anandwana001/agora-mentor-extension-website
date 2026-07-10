@@ -13,3 +13,20 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .DS_Store
+
+# Build artifacts
+tsconfig.tsbuildinfo
+skills-lock.json
+
+# Claude / agent internals
+.agents/
+.claude/
+
+# Placeholder assets (v0 scaffolding)
+public/placeholder*.png
+public/placeholder*.jpg
+public/placeholder*.svg
+
+# Source SVGs (copies live in public/)
+agora-logo-mark.svg
+agora-logo-rgb-blue.svg
