@@ -133,7 +133,7 @@ const faqs = [
   },
   {
     q: 'How much does it cost to use?',
-    a: 'The extension itself is free and open source. You pay Agora for Conversational AI Engine usage at $0.10/minute — a typical 5-minute code review session costs $0.50. For context, 20 sessions/month ≈ $10, comparable to other AI dev tools but pay-as-you-go with no subscription.',
+    a: 'The extension itself is free and open source. You pay Agora for Conversational AI Engine usage at $0.10/minute.',
   },
   {
     q: 'Do I need to create an Agora account?',
@@ -364,9 +364,9 @@ export default function Home() {
             className="flex flex-col sm:flex-row gap-3 justify-center mb-16"
           >
             <a
-              href="https://github.com/anandwana001/agora-mentor-vscode"
+              href="https://github.com/anandwana001/agora-mentor-extension-website"
               target="_blank" rel="noopener noreferrer"
-              className="btn-primary px-8 py-4 text-base"
+              className="btn-primary px-8 py-4 text-base font-display font-bold"
             >
               ⭐ Star on GitHub
               <ArrowRight className="w-4 h-4" />
@@ -374,7 +374,7 @@ export default function Home() {
             <a
               href="https://sso2.agora.io/en/signup?"
               target="_blank" rel="noopener noreferrer"
-              className="btn-ghost px-8 py-4 text-base"
+              className="btn-ghost px-8 py-4 text-base font-display font-bold"
             >
               Create Free Agora Account
             </a>
@@ -627,14 +627,18 @@ export default function Home() {
                 ))}
               </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }} viewport={{ once: true, margin: '-60px' }} className="glass-card p-8 relative" style={{ opacity: 0.75 }}>
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }} viewport={{ once: true, margin: '-60px' }} className="glass-card p-8 relative flex flex-col" style={{ opacity: 0.75 }}>
               <Lock className="absolute top-5 right-5 w-4 h-4" style={{ color: '#555555' }} />
               <div className="flex items-center gap-2 mb-8">
                 <span className="w-2 h-2 rounded-full" style={{ background: '#fbbf24' }} />
                 <span className="font-display font-bold" style={{ color: '#fbbf24' }}>On the roadmap</span>
               </div>
-              <Marquee items={roadmap} />
-              <div className="mt-3"><Marquee items={[...roadmap].reverse()} /></div>
+              <div className="flex flex-col gap-3 flex-1 justify-around overflow-hidden">
+                <Marquee items={roadmap} />
+                <Marquee items={[...roadmap].reverse()} />
+                <Marquee items={roadmap.slice(4).concat(roadmap.slice(0, 4))} />
+                <Marquee items={[...roadmap].reverse().slice(4).concat([...roadmap].reverse().slice(0, 4))} />
+              </div>
             </motion.div>
           </div>
         </div>
@@ -672,18 +676,21 @@ export default function Home() {
             {/* Agora usage */}
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }} viewport={{ once: true, margin: '-60px' }} className="glass-card p-8" style={{ border: '1px solid rgba(9,157,253,0.3)' }}>
               <div className="text-xs font-mono tracking-widest mb-4" style={{ color: B }}>AGORA CONVERSATIONAL AI</div>
-              <div className="flex items-end gap-1 mb-2">
+              <div className="flex items-end gap-1 mb-1">
                 <span className="font-display font-bold" style={{ fontSize: '3rem', color: '#FFFFFF', lineHeight: 1 }}>$0.10</span>
                 <span className="text-base mb-2" style={{ color: '#888888' }}>/minute</span>
               </div>
-              <p className="text-sm mb-8" style={{ color: '#888888' }}>Billed by Agora directly. No markup, no subscription.</p>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold mb-4" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.25)', color: '#4ade80' }}>
+                ✦ First 300 minutes free
+              </div>
+              <p className="text-sm mb-6" style={{ color: '#888888' }}>Billed by Agora directly. No markup, no subscription.</p>
               <div className="space-y-3 mb-8">
                 {[
-                  '5-min session ≈ $0.50',
+                  '300 free minutes on new accounts',
+                  '5-min session ≈ $0.50 after free tier',
                   '10-min deep dive ≈ $1.00',
                   '20 sessions/month ≈ $10',
                   'Includes STT + LLM + TTS',
-                  'Your own Agora account',
                 ].map(f => (
                   <div key={f} className="flex items-center gap-3 text-sm" style={{ color: '#FFFFFF' }}>
                     <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: B }} />
@@ -753,7 +760,7 @@ export default function Home() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
+      <section id="faq" className="relative z-10 py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} className="text-center mb-16">
             <motion.p variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="section-label mb-5">FAQ</motion.p>
@@ -806,11 +813,11 @@ export default function Home() {
               The extension is coming to VS Code Marketplace soon. Star the repo to get notified, and set up your free Agora account now so you're ready to go.
             </motion.p>
             <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} viewport={{ once: true }} className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <a href="https://github.com/anandwana001/agora-mentor-vscode" target="_blank" rel="noopener noreferrer" className="btn-primary px-10 py-4 text-base">
+              <a href="https://github.com/anandwana001/agora-mentor-extension-website" target="_blank" rel="noopener noreferrer" className="btn-primary px-10 py-4 text-base font-display font-bold">
                 ⭐ Star on GitHub
                 <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="https://sso2.agora.io/en/signup?" target="_blank" rel="noopener noreferrer" className="btn-ghost px-10 py-4 text-base">
+              <a href="https://sso2.agora.io/en/signup?" target="_blank" rel="noopener noreferrer" className="btn-ghost px-10 py-4 text-base font-display font-bold">
                 Create Free Agora Account
               </a>
             </motion.div>

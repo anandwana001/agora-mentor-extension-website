@@ -29,14 +29,14 @@ export function Navbar() {
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website' },
-            { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-extension-website/releases' },
+            { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website', external: true },
+            { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-extension-website/releases', external: true },
+            { label: 'FAQ', href: '#faq', external: false },
           ].map(link => (
             <a
               key={link.label}
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="text-sm transition-colors"
               style={{ color: '#888888' }}
               onMouseEnter={e => ((e.target as HTMLElement).style.color = '#FFFFFF')}
