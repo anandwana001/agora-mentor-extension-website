@@ -810,9 +810,46 @@ export default function Home() {
               <SplitWords text="Be first when it launches." baseDelay={0.1} />
             </h2>
             <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.5 }} viewport={{ once: true }} className="text-lg" style={{ color: '#888888' }}>
-              The extension is coming to VS Code Marketplace soon. Star the repo to get notified, and set up your free Agora account now so you're ready to go.
+              Coming to VS Code Marketplace soon. Join the community to get notified the moment it drops.
             </motion.p>
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.5 }} viewport={{ once: true }} className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            {/* Community cards */}
+            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.55, duration: 0.5 }} viewport={{ once: true }} className="grid sm:grid-cols-2 gap-4 pt-2">
+              <a href="https://discord.gg/QfgBCvuX4d" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-4 p-5 rounded-xl text-left transition-all"
+                style={{ background: 'rgba(88,101,242,0.08)', border: '1px solid rgba(88,101,242,0.25)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(88,101,242,0.15)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(88,101,242,0.5)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(88,101,242,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(88,101,242,0.25)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(88,101,242,0.15)' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.012.043.03.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-sm font-semibold mb-0.5" style={{ color: '#FFFFFF' }}>Join Discord</div>
+                  <div className="text-xs" style={{ color: '#888888' }}>Get notified on launch day</div>
+                </div>
+                <ArrowRight className="w-4 h-4 ml-auto flex-shrink-0" style={{ color: '#5865F2' }} />
+              </a>
+              <a href="https://x.com/AgoraIO" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-4 p-5 rounded-xl text-left transition-all"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.2)' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-sm font-semibold mb-0.5" style={{ color: '#FFFFFF' }}>Follow @AgoraIO on X</div>
+                  <div className="text-xs" style={{ color: '#888888' }}>Release announcements & updates</div>
+                </div>
+                <ArrowRight className="w-4 h-4 ml-auto flex-shrink-0" style={{ color: '#888888' }} />
+              </a>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.5 }} viewport={{ once: true }} className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
               <a href="https://github.com/anandwana001/agora-mentor-extension-website" target="_blank" rel="noopener noreferrer" className="btn-primary px-10 py-4 text-base font-display font-bold">
                 ⭐ Star on GitHub
                 <ArrowRight className="w-4 h-4" />
@@ -821,7 +858,7 @@ export default function Home() {
                 Create Free Agora Account
               </a>
             </motion.div>
-            <div className="flex items-center justify-center gap-5 pt-10 flex-wrap text-xs font-mono tracking-wide" style={{ color: '#555555' }}>
+            <div className="flex items-center justify-center gap-5 pt-8 flex-wrap text-xs font-mono tracking-wide" style={{ color: '#555555' }}>
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" />MIT License</span>
               <span>·</span>
               <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5" />Built with Agora RTC</span>
@@ -844,9 +881,11 @@ export default function Home() {
             </div>
             <div className="flex justify-start md:justify-center gap-6 text-sm flex-wrap">
               {[
-                { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-vscode' },
-                { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-vscode/releases' },
-                { label: 'Issues', href: 'https://github.com/anandwana001/agora-mentor-vscode/issues' },
+                { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website' },
+                { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-extension-website/releases' },
+                { label: 'Issues', href: 'https://github.com/anandwana001/agora-mentor-extension-website/issues' },
+                { label: 'Discord', href: 'https://discord.gg/QfgBCvuX4d' },
+                { label: 'X / Twitter', href: 'https://x.com/AgoraIO' },
                 { label: 'Agora Pricing', href: 'https://www.agora.io/en/pricing/conversational-ai-engine/' },
               ].map(link => (
                 <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="transition-colors" style={{ color: '#555555' }}
