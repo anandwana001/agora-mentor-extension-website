@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export function Navbar() {
   return (
@@ -19,12 +20,12 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <Image src="/agora-logo-mark.svg" alt="Agora" width={32} height={32} />
           <span className="font-display font-bold text-[15px] tracking-tight" style={{ color: '#FFFFFF' }}>
             Mentor
           </span>
-        </div>
+        </Link>
 
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-6">

@@ -95,6 +95,9 @@ function Calculator() {
   const chatTotal = convoai
   const freeDays = Math.round(300 / (minsDay * devs))
 
+  const sessionLen = 5
+  const perSession = sessionLen * CONVOAI_RATE
+
   function fmt(n: number) { return n >= 1000 ? `$${(n/1000).toFixed(1)}k` : `$${n.toFixed(2)}` }
 
   const barMax = Math.max(voiceTotal, 1)
@@ -127,7 +130,7 @@ function Calculator() {
           ))}
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-8">
+        <div className="grid sm:grid-cols-2 gap-4 mb-5">
           <div className="rounded-xl p-5" style={{ background: 'rgba(9,157,253,0.08)', border: `1px solid rgba(9,157,253,0.3)` }}>
             <div className="text-xs font-mono font-bold tracking-widest uppercase mb-3" style={{ color: B }}>Voice mode / month</div>
             <div className="font-display font-bold text-3xl mb-2" style={{ color: '#FFFFFF' }}>{fmt(voiceTotal)}</div>
@@ -139,6 +142,24 @@ function Calculator() {
             <div className="text-xs font-mono font-bold tracking-widest uppercase mb-3" style={{ color: '#888888' }}>Chat mode / month</div>
             <div className="font-display font-bold text-3xl mb-2" style={{ color: '#FFFFFF' }}>{fmt(chatTotal)}</div>
             <div className="text-sm" style={{ color: '#888888' }}>ConvoAI {fmt(convoai)} · no RTC</div>
+          </div>
+        </div>
+
+        {/* Per-session perspective */}
+        <div className="rounded-xl px-5 py-4 mb-6 flex flex-wrap gap-5 items-center" style={{ background: 'rgba(9,157,253,0.05)', border: '1px solid rgba(9,157,253,0.12)' }}>
+          <div>
+            <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1" style={{ color: '#555555' }}>Per 5-min session</div>
+            <div className="font-display font-bold text-2xl" style={{ color: '#FFFFFF' }}>{fmt(perSession)}</div>
+          </div>
+          <div style={{ color: '#444', fontSize: '1.2rem' }}>×</div>
+          <div>
+            <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1" style={{ color: '#555555' }}>Sessions / month</div>
+            <div className="font-display font-bold text-2xl" style={{ color: '#FFFFFF' }}>{Math.round(monthly / sessionLen)}</div>
+          </div>
+          <div style={{ color: '#444', fontSize: '1.2rem' }}>=</div>
+          <div>
+            <div className="text-xs font-mono font-bold tracking-widest uppercase mb-1" style={{ color: B }}>Monthly total</div>
+            <div className="font-display font-bold text-2xl" style={{ color: '#FFFFFF' }}>{fmt(convoai)}</div>
           </div>
         </div>
 
@@ -243,13 +264,21 @@ export default function PricingPage() {
           <main className="flex-1 min-w-0 max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               className="mb-8 pb-6" style={{ borderBottom: '1px solid rgba(9,157,253,0.15)' }}>
-              <p className="section-label mb-3">Cost Reference</p>
+              <p className="section-label mb-3">Pricing</p>
               <h1 className="font-display font-bold leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
-                What does Agora Mentor<br />cost to run?
+                Pay per conversation,<br />not per month
               </h1>
-              <p className="text-base leading-relaxed" style={{ color: '#888888', maxWidth: '60ch' }}>
-                Simple answer below. The full technical breakdown (RTC, RTM, free tiers) is one click away if you need it.
+              <p className="text-base leading-loose mb-5" style={{ color: '#888888', maxWidth: '58ch' }}>
+                No subscription. No seat fees. You pay only for the minutes you actually talk to your code — and your first 300 minutes are free.
               </p>
+              <div className="flex flex-wrap gap-3">
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold" style={{ background: 'rgba(74,222,128,0.1)', border: '1px solid rgba(74,222,128,0.3)', color: '#4ade80' }}>
+                  ✓ 300 free minutes to start
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', color: '#888888' }}>
+                  ≈ 60 five-minute voice sessions, free
+                </div>
+              </div>
             </motion.div>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}>
@@ -263,45 +292,60 @@ export default function PricingPage() {
               </h2>
 
               {/* Two big cards */}
-              <div className="grid sm:grid-cols-2 gap-5 mb-6">
-                {/* Chat */}
-                <div className="rounded-2xl p-7 flex flex-col gap-4" style={{ background: 'rgba(74,222,128,0.07)', border: '2px solid rgba(74,222,128,0.35)' }}>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#4ade80' }} />
-                    <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: '#4ade80' }}>Chat mode</span>
+              {/* Voice — featured */}
+              <div className="rounded-2xl p-7 flex flex-col gap-5 mb-5" style={{ background: 'rgba(9,157,253,0.08)', border: '2px solid rgba(9,157,253,0.4)' }}>
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-3 h-3 rounded-full" style={{ background: B }} />
+                    <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: B }}>Voice mode — recommended</span>
                   </div>
+                  <span className="text-xs px-2.5 py-1 rounded-full font-bold" style={{ background: 'rgba(9,157,253,0.15)', color: B, border: '1px solid rgba(9,157,253,0.3)' }}>
+                    Best experience
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-end gap-6">
                   <div>
-                    <span className="font-display font-bold" style={{ fontSize: '3rem', color: '#FFFFFF', lineHeight: 1 }}>$0.10</span>
+                    <span className="font-display font-bold" style={{ fontSize: '3.5rem', color: '#FFFFFF', lineHeight: 1 }}>$0.10</span>
                     <span className="text-base ml-2" style={{ color: '#888888' }}>/ minute</span>
                   </div>
-                  <div className="text-base leading-loose" style={{ color: '#CCCCCC' }}>
-                    That&apos;s it. One charge, one rate.<br />
-                    <span style={{ color: '#888888' }}>No audio fee. No signaling fee.</span>
-                  </div>
-                  <div className="pt-2" style={{ borderTop: '1px solid rgba(74,222,128,0.2)' }}>
-                    <div className="text-sm font-bold mb-1" style={{ color: '#4ade80' }}>✓ First 300 minutes free</div>
-                    <div className="text-sm" style={{ color: '#888888' }}>≈ your first 1–2 weeks of use</div>
+                  <div className="pb-1">
+                    <div className="text-sm font-bold" style={{ color: B }}>≈ $0.50 per 5-min session</div>
+                    <div className="text-xs mt-0.5" style={{ color: '#555555' }}>a focused Q&amp;A costs less than a coffee</div>
                   </div>
                 </div>
+                <div className="grid sm:grid-cols-2 gap-3" style={{ borderTop: '1px solid rgba(9,157,253,0.15)', paddingTop: '1.25rem' }}>
+                  {[
+                    { icon: '🎙', label: 'Talk, don\'t type', desc: 'Ask complex questions in seconds — no autocomplete fighting, no window switching.' },
+                    { icon: '👁', label: 'Eyes stay on code', desc: 'Get answers while you read the file. Voice doesn\'t break your flow the way typing does.' },
+                    { icon: '🔄', label: 'Natural back-and-forth', desc: 'Follow up instantly. Interrupt. Rephrase. It\'s a real conversation, not a chat box.' },
+                    { icon: '🆓', label: '300 min free to start', desc: '≈ 60 sessions at 5 min each. No card required until you\'re ready.' },
+                  ].map(v => (
+                    <div key={v.label} className="flex gap-3 items-start">
+                      <span className="text-lg leading-none mt-0.5 flex-shrink-0">{v.icon}</span>
+                      <div>
+                        <div className="text-sm font-bold mb-0.5" style={{ color: '#FFFFFF' }}>{v.label}</div>
+                        <div className="text-sm leading-relaxed" style={{ color: '#888888' }}>{v.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-                {/* Voice */}
-                <div className="rounded-2xl p-7 flex flex-col gap-4" style={{ background: 'rgba(9,157,253,0.07)', border: '2px solid rgba(9,157,253,0.3)' }}>
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: B }} />
-                    <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: B }}>Voice mode</span>
-                  </div>
+              {/* Chat — secondary */}
+              <div className="rounded-2xl p-6 flex flex-col gap-4 mb-6" style={{ background: 'rgba(74,222,128,0.05)', border: '1px solid rgba(74,222,128,0.25)' }}>
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#4ade80' }} />
+                  <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: '#4ade80' }}>Chat mode — also available</span>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-4">
                   <div>
-                    <span className="font-display font-bold" style={{ fontSize: '3rem', color: '#FFFFFF', lineHeight: 1 }}>≈$0.10</span>
+                    <span className="font-display font-bold" style={{ fontSize: '2.5rem', color: '#FFFFFF', lineHeight: 1 }}>$0.10</span>
                     <span className="text-base ml-2" style={{ color: '#888888' }}>/ minute</span>
                   </div>
-                  <div className="text-base leading-loose" style={{ color: '#CCCCCC' }}>
-                    Practically the same as chat.<br />
-                    <span style={{ color: '#888888' }}>Audio calling adds &lt;2% on top — and only after 5,000 free minutes/month.</span>
-                  </div>
-                  <div className="pt-2" style={{ borderTop: '1px solid rgba(9,157,253,0.2)' }}>
-                    <div className="text-sm font-bold mb-1" style={{ color: B }}>✓ Same 300 free minutes apply</div>
-                    <div className="text-sm" style={{ color: '#888888' }}>Shared with chat sessions</div>
-                  </div>
+                  <div className="text-sm" style={{ color: '#888888' }}>Same ConvoAI rate · no audio fee · good for quick lookups</div>
+                </div>
+                <div className="text-sm" style={{ color: '#555555' }}>
+                  Same 300 free minutes apply. Prefer chat if you&apos;re in a quiet space or just need a one-liner answered.
                 </div>
               </div>
 
@@ -317,8 +361,8 @@ export default function PricingPage() {
                 </div>
               </div>
 
-              <Callout color="green">
-                <strong>Bottom line for most users:</strong> Budget <strong>$0.10 per active session-minute</strong>. At 30 minutes a day, that&apos;s roughly <strong>$90/month</strong> after the free trial. Voice and chat cost the same.
+              <Callout color="blue">
+                <strong>Voice is the reason to use Agora Mentor.</strong> At $0.10/min, a focused 5-minute voice session costs <strong>$0.50</strong> — and often replaces 20 minutes of tab-switching and typing. After your 300 free minutes, a typical developer spending <strong>10 minutes a day on voice</strong> pays about <strong>$30/month</strong>.
               </Callout>
 
               {/* Collapsible full breakdown */}
