@@ -29,6 +29,8 @@ export function Navbar() {
         {/* Nav links */}
         <div className="hidden md:flex items-center gap-6">
           {[
+            { label: 'Docs', href: '/docs', external: false },
+            { label: 'Pricing', href: '/pricing', external: false },
             { label: 'GitHub', href: 'https://github.com/anandwana001/agora-mentor-extension-website', external: true },
             { label: 'Changelog', href: 'https://github.com/anandwana001/agora-mentor-extension-website/releases', external: true },
             { label: 'FAQ', href: '#faq', external: false },
