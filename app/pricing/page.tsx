@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, CheckCircle2, ExternalLink } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, ExternalLink, ChevronDown } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 
 const B = '#099DFD'
@@ -73,10 +73,8 @@ function Table({ headers, rows }: { headers: string[]; rows: (string | React.Rea
 }
 
 const navLinks = [
-  { id: 'products', label: 'Products & Rates' },
-  { id: 'modes', label: 'Cost by Mode' },
-  { id: 'calculator', label: 'Calculator' },
-  { id: 'thresholds', label: 'When Charges Begin' },
+  { id: 'quick', label: 'Quick Answer' },
+  { id: 'calculator', label: 'Cost Calculator' },
   { id: 'examples', label: 'Monthly Examples' },
   { id: 'tips', label: 'Cost Optimization' },
 ]
@@ -185,6 +183,7 @@ function Calculator() {
 
 export default function PricingPage() {
   const [activeId, setActiveId] = useState('')
+  const [detailOpen, setDetailOpen] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -232,11 +231,9 @@ export default function PricingPage() {
                 </a>
               ))}
               <div className="mt-6 p-4 rounded-xl" style={{ background: 'rgba(74,222,128,0.07)', border: '1px solid rgba(74,222,128,0.2)' }}>
-                <div className="text-xs font-bold mb-2" style={{ color: '#4ade80' }}>Free tiers</div>
-                <div className="text-sm space-y-2" style={{ color: '#888888' }}>
-                  <div>✓ 300 min ConvoAI</div>
-                  <div>✓ 10K min/mo RTC</div>
-                  <div>✓ 1M msgs/mo RTM</div>
+                <div className="text-xs font-bold mb-2" style={{ color: '#4ade80' }}>Free trial</div>
+                <div className="text-sm leading-relaxed" style={{ color: '#888888' }}>
+                  300 free minutes · one-time · ≈ your first 1–2 weeks
                 </div>
               </div>
             </div>
@@ -245,131 +242,200 @@ export default function PricingPage() {
           {/* Main */}
           <main className="flex-1 min-w-0 max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-              className="mb-12 pb-8" style={{ borderBottom: '1px solid rgba(9,157,253,0.15)' }}>
+              className="mb-8 pb-6" style={{ borderBottom: '1px solid rgba(9,157,253,0.15)' }}>
               <p className="section-label mb-3">Cost Reference</p>
               <h1 className="font-display font-bold leading-tight mb-4" style={{ fontSize: 'clamp(28px, 4vw, 42px)', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
                 What does Agora Mentor<br />cost to run?
               </h1>
-              <p className="text-base leading-relaxed mb-5" style={{ color: '#888888', maxWidth: '60ch' }}>
-                Three Agora products run under the hood. One of them dominates everything else — here&apos;s exactly what you&apos;ll pay for voice, chat, and mixed usage.
+              <p className="text-base leading-relaxed" style={{ color: '#888888', maxWidth: '60ch' }}>
+                Simple answer below. The full technical breakdown (RTC, RTM, free tiers) is one click away if you need it.
               </p>
-              <div className="flex flex-wrap gap-2">
-                {['300 min free · ConvoAI', '10,000 min/mo free · RTC', '1M msgs/mo free · RTM', 'agora.io/en/pricing · July 2026'].map(b => (
-                  <span key={b} className="text-xs font-mono px-2.5 py-1 rounded-md"
-                    style={{ background: 'rgba(74,222,128,0.08)', border: '1px solid rgba(74,222,128,0.2)', color: '#4ade80' }}>
-                    {b}
-                  </span>
-                ))}
-              </div>
             </motion.div>
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.1 }}>
 
-            {/* §1 Products */}
-            <section id="products">
-              <SectionHeading id="products" num="§1" title="Products & Rates" />
-              <p className="text-base leading-loose mb-6" style={{ color: '#888888', maxWidth: '65ch' }}>
-                The extension uses three billed Agora products. Their costs are very different in magnitude — ConvoAI is the dominant expense regardless of mode.
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 mb-6">
-                {[
-                  { badge: 'ConvoAI', color: B, name: 'Conversational AI Engine', rate: '$0.10', unit: '/ minute', free: 'First 300 min free (one-time)', desc: 'Applies to every session — voice and chat. Charged from session.start() to stop.' },
-                  { badge: 'RTC Audio', color: '#4ade80', name: 'Voice Calling', rate: '$0.99', unit: '/ 1,000 min', free: 'First 10,000 min/mo free', desc: 'Voice mode only. Two participants per session (client + agent). Chat mode has zero RTC cost.' },
-                  { badge: 'RTM', color: '#a78bfa', name: 'Signaling / Transcripts', rate: '$59', unit: '/ month (next tier)', free: 'First 1,000,000 msgs/mo free', desc: '1M messages ≈ 278 hours of conversation. Effectively unlimited for most users.' },
-                ].map(p => (
-                  <div key={p.badge} className="glass-card p-6 flex flex-col gap-3">
-                    <span className="self-start text-xs font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
-                      style={{ background: `${p.color}18`, color: p.color, border: `1px solid ${p.color}30` }}>
-                      {p.badge}
-                    </span>
-                    <div className="font-mono font-bold text-sm" style={{ color: '#FFFFFF' }}>{p.name}</div>
-                    <div className="font-mono font-bold" style={{ fontSize: '1.5rem', color: '#FFFFFF', lineHeight: 1.1 }}>
-                      {p.rate}<span className="text-xs font-normal ml-1" style={{ color: '#888888' }}>{p.unit}</span>
-                    </div>
-                    <div className="text-sm font-bold" style={{ color: '#4ade80' }}>✓ {p.free}</div>
-                    <p className="text-sm leading-relaxed" style={{ color: '#888888' }}>{p.desc}</p>
-                  </div>
-                ))}
-              </div>
-              <Callout color="blue">
-                <strong>The 80/20 rule:</strong> For individual developers and small teams, ConvoAI at $0.10/min is the only number that matters. RTC stays inside its free tier at normal usage. RTM almost never triggers a charge.
-              </Callout>
-            </section>
+            {/* Quick Answer */}
+            <section id="quick">
+              <h2 className="font-mono font-bold text-xl mb-6 pb-4 flex items-baseline gap-3"
+                style={{ borderBottom: '1px solid rgba(9,157,253,0.15)', color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+                <span style={{ color: B, fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.06em' }}>TL;DR ·</span>
+                Simple pricing answer
+              </h2>
 
-            {/* §2 Modes */}
-            <section id="modes">
-              <SectionHeading id="modes" num="§2" title="Cost by Mode" />
-              <p className="text-base leading-loose mb-6" style={{ color: '#888888' }}>
-                The mode you choose determines which products are active during a session.
-              </p>
-              <div className="grid sm:grid-cols-3 gap-4 mb-6">
-                {[
-                  { label: 'Voice Mode', color: B, rows: [['ConvoAI agent', '$0.10/min'], ['RTC (2 participants)', '~$0.002/min'], ['RTM transcripts', 'free tier'], ['Effective total', '~$0.102/min']] },
-                  { label: 'Chat Mode', color: '#4ade80', rows: [['ConvoAI agent', '$0.10/min'], ['RTC audio', '$0 — not used'], ['RTM transcripts', 'free tier'], ['Effective total', '$0.10/min']] },
-                  { label: 'Mixed Use', color: '#fbbf24', rows: [['Billing', 'per session'], ['No mixed tier', 'each session priced by type'], ['RTC pool', 'shared across voice sessions'], ['Effective total', 'sum of sessions']] },
-                ].map(mode => (
-                  <div key={mode.label} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${mode.color}25` }}>
-                    <div className="px-5 py-3 text-sm font-mono font-bold flex items-center gap-2"
-                      style={{ background: `${mode.color}10`, borderBottom: `1px solid ${mode.color}20`, color: mode.color }}>
-                      <span className="w-2 h-2 rounded-full" style={{ background: mode.color }} />
-                      {mode.label}
-                    </div>
-                    <div className="p-5 space-y-3">
-                      {mode.rows.map(([label, val]) => (
-                        <div key={label} className="flex justify-between items-baseline text-sm">
-                          <span style={{ color: '#888888' }}>{label}</span>
-                          <span className="font-mono font-bold" style={{ color: label === 'Effective total' ? mode.color : '#CCCCCC' }}>{val}</span>
+              {/* Two big cards */}
+              <div className="grid sm:grid-cols-2 gap-5 mb-6">
+                {/* Chat */}
+                <div className="rounded-2xl p-7 flex flex-col gap-4" style={{ background: 'rgba(74,222,128,0.07)', border: '2px solid rgba(74,222,128,0.35)' }}>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#4ade80' }} />
+                    <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: '#4ade80' }}>Chat mode</span>
+                  </div>
+                  <div>
+                    <span className="font-display font-bold" style={{ fontSize: '3rem', color: '#FFFFFF', lineHeight: 1 }}>$0.10</span>
+                    <span className="text-base ml-2" style={{ color: '#888888' }}>/ minute</span>
+                  </div>
+                  <div className="text-base leading-loose" style={{ color: '#CCCCCC' }}>
+                    That&apos;s it. One charge, one rate.<br />
+                    <span style={{ color: '#888888' }}>No audio fee. No signaling fee.</span>
+                  </div>
+                  <div className="pt-2" style={{ borderTop: '1px solid rgba(74,222,128,0.2)' }}>
+                    <div className="text-sm font-bold mb-1" style={{ color: '#4ade80' }}>✓ First 300 minutes free</div>
+                    <div className="text-sm" style={{ color: '#888888' }}>≈ your first 1–2 weeks of use</div>
+                  </div>
+                </div>
+
+                {/* Voice */}
+                <div className="rounded-2xl p-7 flex flex-col gap-4" style={{ background: 'rgba(9,157,253,0.07)', border: '2px solid rgba(9,157,253,0.3)' }}>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: B }} />
+                    <span className="font-mono font-bold text-sm tracking-widest uppercase" style={{ color: B }}>Voice mode</span>
+                  </div>
+                  <div>
+                    <span className="font-display font-bold" style={{ fontSize: '3rem', color: '#FFFFFF', lineHeight: 1 }}>≈$0.10</span>
+                    <span className="text-base ml-2" style={{ color: '#888888' }}>/ minute</span>
+                  </div>
+                  <div className="text-base leading-loose" style={{ color: '#CCCCCC' }}>
+                    Practically the same as chat.<br />
+                    <span style={{ color: '#888888' }}>Audio calling adds &lt;2% on top — and only after 5,000 free minutes/month.</span>
+                  </div>
+                  <div className="pt-2" style={{ borderTop: '1px solid rgba(9,157,253,0.2)' }}>
+                    <div className="text-sm font-bold mb-1" style={{ color: B }}>✓ Same 300 free minutes apply</div>
+                    <div className="text-sm" style={{ color: '#888888' }}>Shared with chat sessions</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* What counts as a minute */}
+              <div className="rounded-xl p-6 mb-6" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <div className="font-bold text-base mb-3" style={{ color: '#FFFFFF' }}>What counts as a &ldquo;minute&rdquo;?</div>
+                <div className="text-base leading-loose" style={{ color: '#888888' }}>
+                  The clock runs from when you click <strong style={{ color: '#FFFFFF' }}>Start</strong> to when you click <strong style={{ color: '#FFFFFF' }}>Stop</strong> — wall-clock time, not just when the AI is speaking. So a 5-minute session where you ask two questions costs <strong style={{ color: '#FFFFFF' }}>$0.50</strong>, regardless of how much silence is in between.
+                </div>
+                <div className="mt-4 flex flex-wrap gap-6 text-sm" style={{ color: '#555555' }}>
+                  <span>▸ Chat: timer stops the moment you hit Stop</span>
+                  <span>▸ Voice: auto-stops after 30 s of silence</span>
+                </div>
+              </div>
+
+              <Callout color="green">
+                <strong>Bottom line for most users:</strong> Budget <strong>$0.10 per active session-minute</strong>. At 30 minutes a day, that&apos;s roughly <strong>$90/month</strong> after the free trial. Voice and chat cost the same.
+              </Callout>
+
+              {/* Collapsible full breakdown */}
+              <div className="mt-8 rounded-xl overflow-hidden" style={{ border: '1px solid rgba(9,157,253,0.15)' }}>
+                <button
+                  onClick={() => setDetailOpen(v => !v)}
+                  className="w-full flex items-center justify-between px-6 py-4 text-left transition-colors"
+                  style={{ background: 'rgba(9,157,253,0.05)' }}
+                  onMouseEnter={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(9,157,253,0.1)')}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.background = 'rgba(9,157,253,0.05)')}>
+                  <div>
+                    <div className="font-mono font-bold text-sm" style={{ color: B }}>Full breakdown — RTC, RTM &amp; free tier details</div>
+                    <div className="text-sm mt-0.5" style={{ color: '#555555' }}>Products, per-product rates, cost-by-mode table, when each free tier runs out</div>
+                  </div>
+                  <ChevronDown className="w-5 h-5 flex-shrink-0 transition-transform duration-200" style={{ color: B, transform: detailOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+                </button>
+
+                {detailOpen && (
+                  <div className="px-6 pb-6 pt-2">
+
+                    {/* Products */}
+                    <h3 className="font-mono font-bold text-base mt-6 mb-4 pb-3" style={{ color: '#FFFFFF', borderBottom: '1px solid rgba(9,157,253,0.1)' }}>
+                      Three products under the hood
+                    </h3>
+                    <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                      {[
+                        { badge: 'ConvoAI', color: B, name: 'Conversational AI Engine', rate: '$0.10', unit: '/ minute', free: 'First 300 min free (one-time)', desc: 'Runs on every session — voice and chat. This is the charge you actually notice.' },
+                        { badge: 'RTC Audio', color: '#4ade80', name: 'Voice Calling', rate: '$0.99', unit: '/ 1,000 min', free: 'First 10,000 min/mo free', desc: 'Voice mode only. Zero cost for chat. At 1 hr/day you use 1,800 min — well inside the 5,000 min free limit.' },
+                        { badge: 'RTM', color: '#a78bfa', name: 'Signaling / Transcripts', rate: '$59', unit: '/ month (next tier)', free: 'First 1,000,000 msgs/mo free', desc: '1M messages ≈ 278 hrs of conversation. Effectively free for any normal usage.' },
+                      ].map(p => (
+                        <div key={p.badge} className="glass-card p-5 flex flex-col gap-3">
+                          <span className="self-start text-xs font-mono font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
+                            style={{ background: `${p.color}18`, color: p.color, border: `1px solid ${p.color}30` }}>
+                            {p.badge}
+                          </span>
+                          <div className="font-mono font-bold text-sm" style={{ color: '#FFFFFF' }}>{p.name}</div>
+                          <div className="font-mono font-bold" style={{ fontSize: '1.4rem', color: '#FFFFFF', lineHeight: 1.1 }}>
+                            {p.rate}<span className="text-xs font-normal ml-1" style={{ color: '#888888' }}>{p.unit}</span>
+                          </div>
+                          <div className="text-sm font-bold" style={{ color: '#4ade80' }}>✓ {p.free}</div>
+                          <p className="text-sm leading-relaxed" style={{ color: '#888888' }}>{p.desc}</p>
                         </div>
                       ))}
                     </div>
+
+                    {/* Per-mode breakdown */}
+                    <h3 className="font-mono font-bold text-base mt-8 mb-4 pb-3" style={{ color: '#FFFFFF', borderBottom: '1px solid rgba(9,157,253,0.1)' }}>
+                      Per-mode cost breakdown
+                    </h3>
+                    <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                      {[
+                        { label: 'Voice Mode', color: B, rows: [['ConvoAI (AI engine)', '$0.10/min'], ['RTC (audio calling)', '~$0.002/min'], ['RTM (transcripts)', 'free tier'], ['Total', '~$0.102/min']] },
+                        { label: 'Chat Mode', color: '#4ade80', rows: [['ConvoAI (AI engine)', '$0.10/min'], ['RTC (audio calling)', '$0 — not used'], ['RTM (transcripts)', 'free tier'], ['Total', '$0.10/min']] },
+                        { label: 'Mixed (both)', color: '#fbbf24', rows: [['Billed', 'per session type'], ['Voice sessions', '~$0.102/min'], ['Chat sessions', '$0.10/min'], ['Total', 'sum of sessions']] },
+                      ].map(mode => (
+                        <div key={mode.label} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${mode.color}25` }}>
+                          <div className="px-4 py-3 text-sm font-mono font-bold flex items-center gap-2"
+                            style={{ background: `${mode.color}10`, borderBottom: `1px solid ${mode.color}20`, color: mode.color }}>
+                            <span className="w-2 h-2 rounded-full" style={{ background: mode.color }} />
+                            {mode.label}
+                          </div>
+                          <div className="p-4 space-y-3">
+                            {mode.rows.map(([label, val]) => (
+                              <div key={label} className="flex justify-between items-baseline text-sm">
+                                <span style={{ color: '#888888' }}>{label}</span>
+                                <span className="font-mono font-bold" style={{ color: label === 'Total' ? mode.color : '#CCCCCC' }}>{val}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Free tier thresholds */}
+                    <h3 className="font-mono font-bold text-base mt-8 mb-4 pb-3" style={{ color: '#FFFFFF', borderBottom: '1px solid rgba(9,157,253,0.1)' }}>
+                      When each free tier runs out
+                    </h3>
+                    <Table
+                      headers={['Product', 'Free until…', 'What triggers the first bill']}
+                      rows={[
+                        [
+                          <span key="convoai"><strong style={{ color: '#FFFFFF' }}>ConvoAI</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice &amp; chat</span></span>,
+                          <span key="cf">300 session minutes<br /><span className="text-xs" style={{ color: '#555555' }}>one-time new-account credit</span></span>,
+                          'Every minute after that · at 30 min/day ≈ 10 days of use',
+                        ],
+                        [
+                          <span key="rtc"><strong style={{ color: '#FFFFFF' }}>RTC Audio</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice only</span></span>,
+                          <span key="rf">10,000 participant-min/mo<br /><span className="text-xs" style={{ color: '#555555' }}>= 5,000 voice session min</span></span>,
+                          '~2.8 hrs/day of continuous voice · resets monthly · most users never hit this',
+                        ],
+                        [
+                          <span key="rtm"><strong style={{ color: '#FFFFFF' }}>RTM Signaling</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice &amp; chat</span></span>,
+                          <span key="rtmf">1,000,000 messages/mo<br /><span className="text-xs" style={{ color: '#555555' }}>≈ 278 hrs of conversation</span></span>,
+                          'Practically unlimited for individuals and small teams',
+                        ],
+                      ]}
+                    />
+                    <Callout color="orange">
+                      <strong>RTC free tier math:</strong> 10,000 free participant-minutes ÷ 2 participants = <strong>5,000 free voice-session minutes/month</strong>. At 1 hr/day that&apos;s 1,800 min — you&apos;d need ~2.8 hrs/day of non-stop voice before RTC starts charging.
+                    </Callout>
                   </div>
-                ))}
+                )}
               </div>
-              <Callout color="purple">
-                <strong>Voice vs chat:</strong> The ConvoAI cost is identical for both modes. RTC adds roughly 2% on top for voice, and only applies once you&apos;ve exceeded the 10,000 free participant-minutes per month.
-              </Callout>
             </section>
 
-            {/* §3 Calculator */}
+            {/* Calculator */}
             <section id="calculator">
-              <SectionHeading id="calculator" num="§3" title="Interactive Cost Calculator" />
+              <SectionHeading id="calculator" num="§2" title="Cost Calculator" />
               <p className="text-base leading-loose mb-6" style={{ color: '#888888', maxWidth: '65ch' }}>
-                Adjust the sliders to estimate your ongoing monthly cost. The 300 free ConvoAI minutes are excluded here — they cover roughly the first 1–2 weeks.
+                Adjust the sliders to see your ongoing monthly cost after the free trial. Voice and chat come out nearly identical — the only difference is a tiny RTC fee on voice.
               </p>
               <Calculator />
             </section>
 
-            {/* §4 Thresholds */}
-            <section id="thresholds">
-              <SectionHeading id="thresholds" num="§4" title="When Charges Begin" />
-              <p className="text-base leading-loose mb-6" style={{ color: '#888888' }}>
-                Each product has an independent free tier. Here&apos;s exactly when you cross into paid territory.
-              </p>
-              <Table
-                headers={['Product', 'Free until…', 'What triggers the first bill']}
-                rows={[
-                  [
-                    <span key="convoai"><strong style={{ color: '#FFFFFF' }}>ConvoAI</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice &amp; chat both</span></span>,
-                    <span key="cf">300 session minutes<br /><span className="text-xs" style={{ color: '#555555' }}>one-time new-account credit</span></span>,
-                    'Every minute after that · at 30 min/day ≈ 10 days of use',
-                  ],
-                  [
-                    <span key="rtc"><strong style={{ color: '#FFFFFF' }}>RTC Audio</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice mode only</span></span>,
-                    <span key="rf">10,000 participant-min/mo<br /><span className="text-xs" style={{ color: '#555555' }}>= 5,000 voice session minutes</span></span>,
-                    '~2.8 hrs/day of continuous voice · resets monthly · most users never hit this',
-                  ],
-                  [
-                    <span key="rtm"><strong style={{ color: '#FFFFFF' }}>RTM Signaling</strong><br /><span className="text-xs" style={{ color: '#555555' }}>Voice &amp; chat both</span></span>,
-                    <span key="rtmf">1,000,000 messages/mo<br /><span className="text-xs" style={{ color: '#555555' }}>≈ 278 hrs of conversation</span></span>,
-                    'Practically unlimited for individuals and small teams',
-                  ],
-                ]}
-              />
-            </section>
-
-            {/* §5 Examples */}
+            {/* Examples */}
             <section id="examples">
-              <SectionHeading id="examples" num="§5" title="Monthly Cost Examples" />
+              <SectionHeading id="examples" num="§3" title="Monthly Cost Examples" />
               <p className="text-base leading-loose mb-6" style={{ color: '#888888' }}>
                 All figures are ongoing (after the 300 free ConvoAI minutes). RTC costs assume voice mode throughout.
               </p>
@@ -384,14 +450,11 @@ export default function PricingPage() {
                   ['Team of 10 · 1 hr/day · voice', '18,000 min', '$1,800.00', '~$7.92', <strong key="t6">~$1,808</strong>],
                 ]}
               />
-              <Callout color="orange">
-                <strong>RTC free tier math:</strong> 10,000 free participant-minutes ÷ 2 participants = <strong>5,000 voice session minutes free per month</strong>. At 1 hr/day that&apos;s only 1,800 min — you&apos;d need ~2.8 hrs/day of non-stop voice to start incurring RTC charges.
-              </Callout>
             </section>
 
-            {/* §6 Tips */}
+            {/* Tips */}
             <section id="tips">
-              <SectionHeading id="tips" num="§6" title="Cost Optimization" />
+              <SectionHeading id="tips" num="§4" title="Cost Optimization" />
               <div className="space-y-4">
                 {[
                   { color: 'green' as const, n: 1, content: <><strong>Stop sessions explicitly.</strong> ConvoAI charges from <Code>session.start()</Code> to stop. Voice mode auto-stops after 30 s of silence (<Code>idleTimeout:30</Code>). Chat mode has <Code>idleTimeout:0</Code> — click Stop as soon as you&apos;re done.</> },
